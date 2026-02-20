@@ -9,6 +9,7 @@ export interface Tenant {
     gender?: Gender;
     profileImage?: string;
     kycs?: Kyc[];
+    createdAt?: string;
 }
 
 export interface Kyc {

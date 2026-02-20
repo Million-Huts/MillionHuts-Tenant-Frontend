@@ -1,6 +1,6 @@
 import { Outlet } from "react-router-dom";
-import AppSidebar from "./common/AppSidebar";
-import TopNavbar from "./common/TopNavbar";
+import AppSidebar from "./shared/AppSidebar";
+import TopNavbar from "./shared/TopNavbar";
 import { useState } from "react";
 
 const ProtectedLayout = () => {

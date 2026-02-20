@@ -9,9 +9,8 @@ import Register from './pages/Auth/Register';
 
 import Dashboard from './pages/Dashboard';
 import Profile from './pages/Profile/TenantProfilePage';
-// later:
-// import Complaints from './pages/Complaints';
-// import Announcements from './pages/Announcements';
+import PGPage from './pages/PGPage';
+import QRScanner from './pages/QRScanner';
 
 function App() {
   return (
@@ -26,7 +25,9 @@ function App() {
           <Route element={<ProtectedLayout />}>
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/profile" element={<Profile />} />
+            <Route path="/scan" element={<QRScanner />} />
 
+            <Route path="/pg/:pgCode" element={<PGPage />} />
             {/* Future tenant-only pages */}
             {/* <Route path="/complaints" element={<Complaints />} /> */}
             {/* <Route path="/announcements" element={<Announcements />} /> */}

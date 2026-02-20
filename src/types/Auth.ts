@@ -1,10 +1,9 @@
+import type { StayRecord } from "./stay";
 import type { Tenant } from "./tenant";
 
-// src/types/auth.ts
-export interface TenantPublic extends Tenant { }
-
 export interface AuthContextType {
-    tenant: TenantPublic | null;
+    tenant: Tenant | null;
+    stayRecords: StayRecord | null;
     loading: boolean;
     isAuthenticated: boolean;
     login: (identifier: string, password: string) => Promise<void>;
