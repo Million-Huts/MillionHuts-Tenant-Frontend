@@ -7,8 +7,9 @@ import {
 } from "react";
 
 import { api, apiPrivate } from "@/lib/api";
-import type { TenantPublic, AuthContextType } from "@/types/auth";
+import { type AuthContextType } from "@/types/auth";
 import type { StayRecord } from "@/types/stay";
+import type { Tenant } from "@/types/tenant";
 
 
 
@@ -17,7 +18,7 @@ const AuthContext = createContext<AuthContextType | null>(null);
 
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-    const [tenant, setTenant] = useState<TenantPublic | null>(null);
+    const [tenant, setTenant] = useState<Tenant | null>(null);
     const [stayRecord, setStayRecord] = useState<StayRecord | null>(null);
 
     const [loading, setLoading] = useState(true);

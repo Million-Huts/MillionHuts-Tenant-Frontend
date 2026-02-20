@@ -9,14 +9,14 @@ const ProtectedLayout = () => {
     return (
         <div className="flex min-h-screen">
             <AppSidebar
-                sidebarOpen={sidebarOpen}
-                setSidebarOpen={setSidebarOpen}
+                mobileOpen={sidebarOpen}
+                setMobileOpen={setSidebarOpen}
             />
 
             <main className="flex-1 bg-gray-50">
                 <TopNavbar
-                    sidebarOpen={sidebarOpen}
-                    setSidebarOpen={setSidebarOpen}
+                    mobileOpen={sidebarOpen}
+                    setMobileOpen={setSidebarOpen}
                 />
                 <div className="p-4">
                     <Outlet />
