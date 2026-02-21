@@ -12,7 +12,6 @@ import type { StayRecord } from "@/types/stay";
 import type { Tenant } from "@/types/tenant";
 
 
-
 const AuthContext = createContext<AuthContextType | null>(null);
 
 

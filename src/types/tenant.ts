@@ -8,7 +8,7 @@ export interface Tenant {
     dateOfBirth?: string;
     gender?: Gender;
     profileImage?: string;
-    kycs?: Kyc[];
+    kycs: Kyc[] | [] | null;
     createdAt?: string;
 }
 
