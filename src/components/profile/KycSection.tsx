@@ -3,6 +3,7 @@ import KycModal from "./KycModal";
 import KycCard from "./KycCard";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/context/AuthContext";
+import type { Kyc } from "@/types/tenant";
 
 const KycSection = () => {
     const [open, setOpen] = useState(false);
@@ -32,7 +33,7 @@ const KycSection = () => {
                 </p>
             ) : (
                 <div className="grid md:grid-cols-3 gap-4">
-                    {kycs.map((k) => (
+                    {kycs.map((k: Kyc) => (
                         <KycCard
                             key={k.id}
                             kyc={k}
