@@ -7,7 +7,7 @@ import {
 } from "react";
 
 import { api, apiPrivate } from "@/lib/api";
-import { type AuthContextType } from "@/types/auth";
+import type { AuthContextType } from "@/types/auth";
 import type { StayRecord } from "@/types/stay";
 import type { Tenant } from "@/types/tenant";
 
