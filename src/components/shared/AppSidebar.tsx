@@ -5,11 +5,11 @@ import {
     ChevronLeft,
     Home,
     CreditCard,
-    Bell,
     Lock,
     Command,
     X,
-    QrCode
+    QrCode,
+    MessageSquareWarning
 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
@@ -35,7 +35,7 @@ export default function AppSidebar({ mobileOpen, setMobileOpen }: Props) {
         { label: "Dashboard", icon: LayoutDashboard, to: "/dashboard" },
         { label: "My PG", icon: Home, to: "/my-pg", protected: true },
         { label: "Payments", icon: CreditCard, to: "/payments", protected: true },
-        { label: "Notices", icon: Bell, to: "/notices", protected: true },
+        { label: "Complaints", icon: MessageSquareWarning, to: "/complaints", protected: true },
         { label: "Scan QR", icon: QrCode, to: "/scan" },
     ];
 
@@ -151,7 +151,7 @@ export default function AppSidebar({ mobileOpen, setMobileOpen }: Props) {
         <>
             <aside className="hidden md:flex h-screen sticky top-0">{sidebarContent}</aside>
             <div className={cn(
-                "fixed inset-y-0 left-0 z-50 w-72 bg-sidebar border-r transform transition-transform duration-300 md:hidden",
+                "fixed inset-y-0 left-0 z-50 w-72 bg-background border-r transform transition-transform duration-300 md:hidden",
                 mobileOpen ? "translate-x-0" : "-translate-x-full"
             )}>
                 <div className="flex h-16 items-center justify-between px-6 border-b">
