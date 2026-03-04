@@ -13,6 +13,7 @@ import PGPage from './pages/PGPage';
 import QRScanner from './pages/QRScanner';
 import ComplaintsPage from './pages/Complaints/ComplaintsPage';
 import ComplaintDetailsPage from './pages/Complaints/ComplaintDetails';
+import TenantNotificationsPage from './pages/NotificationsPage';
 
 function App() {
   return (
@@ -30,9 +31,12 @@ function App() {
             <Route path="/scan" element={<QRScanner />} />
 
             <Route path="/pg/:pgCode" element={<PGPage />} />
-            {/* Future tenant-only pages */}
+            {/* Complaints Module */}
             <Route path="/complaints" element={<ComplaintsPage />} />
             <Route path="/complaints/:complaintId" element={<ComplaintDetailsPage />} />
+
+            {/* Notifications Module  */}
+            <Route path="/notifications" element={<TenantNotificationsPage />} />
             {/* <Route path="/announcements" element={<Announcements />} /> */}
           </Route>
         </Route>

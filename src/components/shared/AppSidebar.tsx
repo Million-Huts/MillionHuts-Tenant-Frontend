@@ -9,7 +9,8 @@ import {
     Command,
     X,
     QrCode,
-    MessageSquareWarning
+    MessageSquareWarning,
+    Bell
 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
@@ -36,6 +37,7 @@ export default function AppSidebar({ mobileOpen, setMobileOpen }: Props) {
         { label: "My PG", icon: Home, to: "/my-pg", protected: true },
         { label: "Payments", icon: CreditCard, to: "/payments", protected: true },
         { label: "Complaints", icon: MessageSquareWarning, to: "/complaints", protected: true },
+        { label: "Notifications", icon: Bell, to: "/notifications", protected: true },
         { label: "Scan QR", icon: QrCode, to: "/scan" },
     ];
 
