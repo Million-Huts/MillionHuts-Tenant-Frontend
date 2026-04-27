@@ -6,7 +6,6 @@ export interface AuthContextType {
     stayRecords: StayRecord | null;
     loading: boolean;
     isAuthenticated: boolean;
-    login: (identifier: string, password: string) => Promise<void>;
     logout: () => Promise<void>;
-    refreshTenant: () => Promise<void>;
+    fetchMe: () => Promise<void>;
 }

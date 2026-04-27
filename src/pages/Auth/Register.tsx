@@ -6,10 +6,8 @@ import { Card, CardContent } from "@/components/ui/card";
 import toast from "react-hot-toast";
 import { api } from "@/lib/api";
 import { Chrome, UserPlus } from "lucide-react";
-import { useAuth } from "@/context/AuthContext";
 
 const Register = () => {
-    const { login } = useAuth();
     const navigate = useNavigate();
 
     const [form, setForm] = useState({
@@ -28,11 +26,15 @@ const Register = () => {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
-        if (!form.fullName || !form.password) {
+        const fullName = form.fullName.trim();
+        const email = form.email.trim();
+        const phone = form.phone.trim();
+
+        if (!fullName || !form.password) {
             return toast.error("Please fill required fields");
         }
 
-        if (!form.email && !form.phone) {
+        if (!email && !phone) {
             return toast.error("Email or phone required");
         }
 
@@ -44,14 +46,13 @@ const Register = () => {
             setLoading(true);
             await api.post("/auth/register", {
                 ...form,
-                fullName: form.fullName.trim(),
-                email: form.email.trim(),
-                phone: form.phone.trim(),
+                fullName: fullName,
+                email: email || undefined,
+                phone: phone || undefined,
             });
 
-            await login(form.email || form.phone, form.password);
             toast.success("Account created successfully!");
-            navigate("/dashboard");
+            navigate("/login");
         } catch (error: any) {
             toast.error(error?.response?.data?.message || "Registration failed");
         } finally {

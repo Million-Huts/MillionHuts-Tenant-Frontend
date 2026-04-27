@@ -11,25 +11,19 @@ import type { AuthContextType } from "@/types/auth";
 import type { StayRecord } from "@/types/stay";
 import type { Tenant } from "@/types/tenant";
 
-
 const AuthContext = createContext<AuthContextType | null>(null);
-
-
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
     const [tenant, setTenant] = useState<Tenant | null>(null);
     const [stayRecord, setStayRecord] = useState<StayRecord | null>(null);
 
     const [loading, setLoading] = useState(true);
-
     const [initialised, setInitialised] = useState(false);
 
-
-
     // ======================================================
-    // REFRESH TENANT SESSION
+    // FETCH CURRENT TENANT
     // ======================================================
-    const refreshTenant = async () => {
+    const fetchMe = async () => {
         try {
             const res = await apiPrivate.get("/auth/me");
 
@@ -38,10 +32,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
             setTenant(tenantData);
             setStayRecord(stayData);
-        } catch (error: any) {
-            /**
-             * Session invalid
-             */
+        } catch {
+            // session invalid / not logged in
             setTenant(null);
             setStayRecord(null);
         } finally {
@@ -50,19 +42,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         }
     };
 
-
-
-    // ======================================================
-    // LOGIN
-    // ======================================================
-    const login = async (identifier: string, password: string) => {
-        await api.post("/auth/login", { identifier, password });
-
-        await refreshTenant();
-    };
-
-
-
     // ======================================================
     // LOGOUT
     // ======================================================
@@ -70,37 +49,30 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         try {
             await api.post("/auth/logout");
         } catch {
-            // ignore server failure
+            // ignore errors
         } finally {
             setTenant(null);
             setStayRecord(null);
         }
     };
 
-
-
     // ======================================================
-    // LOAD SESSION ON APP START
+    // INITIAL LOAD
     // ======================================================
     useEffect(() => {
         if (!initialised) {
-            refreshTenant();
+            fetchMe();
         }
     }, [initialised]);
 
-
-
     const value: AuthContextType = {
         tenant,
-        stayRecords: stayRecord, // keep your type compatibility
+        stayRecords: stayRecord, // keep compatibility if needed
         loading,
         isAuthenticated: !!tenant,
-        login,
         logout,
-        refreshTenant,
+        fetchMe,
     };
-
-
 
     return (
         <AuthContext.Provider value={value}>
@@ -108,8 +80,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         </AuthContext.Provider>
     );
 };
-
-
 
 export const useAuth = () => {
     const context = useContext(AuthContext);
@@ -120,3 +90,4 @@ export const useAuth = () => {
 
     return context;
 };
+

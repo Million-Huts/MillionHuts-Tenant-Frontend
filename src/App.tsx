@@ -14,6 +14,7 @@ import QRScanner from './pages/QRScanner';
 import ComplaintsPage from './pages/Complaints/ComplaintsPage';
 import ComplaintDetailsPage from './pages/Complaints/ComplaintDetails';
 import TenantNotificationsPage from './pages/NotificationsPage';
+import ForgotPasswordPage from './pages/Auth/ForgotPassword';
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
         {/* Public Routes */}
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/forgot-password" element={<ForgotPasswordPage />} />
 
         {/* Protected Routes */}
         <Route element={<ProtectedRoute />}>

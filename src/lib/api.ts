@@ -12,7 +12,9 @@ const checkServer = async (url: string) => {
             finalUrl = url.split('/api/v1')[0];
         await axios.get(finalUrl, { timeout: 3000 });
         return true;
-    } catch {
+    } catch (error: any) {
+        console.log("server error: ", error);
+
         return false;
     }
 };
