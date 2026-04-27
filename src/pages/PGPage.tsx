@@ -17,14 +17,14 @@ import {
     ShieldCheck
 } from "lucide-react";
 import toast from "react-hot-toast";
-import type { PG } from "@/types/pg";
+import type { PGFull } from "@/types/pg";
 import { LoadingOverlay } from "@/components/ui/LoadingOverlay";
 
 export default function PGPage() {
     const { pgCode } = useParams();
     const navigate = useNavigate();
 
-    const [pg, setPg] = useState<PG | null>(null);
+    const [pg, setPg] = useState<PGFull | null>(null);
     const [loading, setLoading] = useState(true);
     const [applying, setApplying] = useState(false);
     const [message, setMessage] = useState("");
