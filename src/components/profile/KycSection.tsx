@@ -7,12 +7,12 @@ import type { Kyc } from "@/types/tenant";
 
 const KycSection = () => {
     const [open, setOpen] = useState(false);
-    const { tenant, refreshTenant } = useAuth();
+    const { tenant, fetchMe } = useAuth();
 
     const kycs = tenant?.kycs ?? [];
 
     const refresh = async () => {
-        await refreshTenant();
+        await fetchMe();
     };
 
     return (

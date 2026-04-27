@@ -5,6 +5,7 @@ import App from './App.tsx'
 import { BrowserRouter } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext.tsx';
 import { initApiBase } from './lib/api.ts';
+import { ThemeProvider } from './context/ThemeContext.tsx';
 
 initApiBase().finally(() => {
 
@@ -12,7 +13,9 @@ initApiBase().finally(() => {
     <StrictMode>
       <BrowserRouter>
         <AuthProvider>
-          <App />
+          <ThemeProvider>
+            <App />
+          </ThemeProvider>
         </AuthProvider>
       </BrowserRouter>
     </StrictMode>,

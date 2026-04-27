@@ -1,24 +1,30 @@
 import { Outlet } from "react-router-dom";
+import { useState } from "react";
+
 import AppSidebar from "./shared/AppSidebar";
 import TopNavbar from "./shared/TopNavbar";
-import { useState } from "react";
 
 const ProtectedLayout = () => {
     const [sidebarOpen, setSidebarOpen] = useState(false);
 
     return (
-        <div className="flex min-h-screen">
+        <div className="flex min-h-screen bg-background">
+            {/* Sidebar */}
             <AppSidebar
                 mobileOpen={sidebarOpen}
                 setMobileOpen={setSidebarOpen}
             />
 
-            <main className="flex-1 bg-gray-50">
+            {/* Main Content */}
+            <main className="flex-1 flex flex-col">
+                {/* Top Navbar */}
                 <TopNavbar
                     mobileOpen={sidebarOpen}
                     setMobileOpen={setSidebarOpen}
                 />
-                <div className="p-4">
+
+                {/* Page Content */}
+                <div className="flex-1 p-4">
                     <Outlet />
                 </div>
             </main>

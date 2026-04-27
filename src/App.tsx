@@ -1,56 +1,112 @@
-import { Routes, Route, Navigate } from 'react-router-dom';
-import { Toaster } from 'react-hot-toast';
+import { Routes, Route, Navigate } from "react-router-dom";
+import { Toaster } from "react-hot-toast";
 
-import ProtectedRoute from '@/components/ProtectedRoute';
-import ProtectedLayout from '@/components/ProtectedLayout';
+import { useAuth } from "@/context/AuthContext";
 
-import Login from './pages/Auth/Login';
-import Register from './pages/Auth/Register';
+import ProtectedRoute from "@/components/ProtectedRoute";
+import PublicRoute from "@/components/PublicRoute";
+import ProtectedLayout from "@/components/ProtectedLayout";
 
-import Dashboard from './pages/Dashboard';
-import Profile from './pages/Profile/TenantProfilePage';
-import PGPage from './pages/PGPage';
-import QRScanner from './pages/QRScanner';
-import ComplaintsPage from './pages/Complaints/ComplaintsPage';
-import ComplaintDetailsPage from './pages/Complaints/ComplaintDetails';
-import TenantNotificationsPage from './pages/NotificationsPage';
-import ForgotPasswordPage from './pages/Auth/ForgotPassword';
+// Auth Pages
+import Login from "./pages/Auth/Login";
+import Register from "./pages/Auth/Register";
+import ForgotPasswordPage from "./pages/Auth/ForgotPassword";
+
+// App Pages
+import Dashboard from "./pages/Dashboard";
+import Profile from "./pages/Profile/TenantProfilePage";
+import PGPage from "./pages/PGPage";
+import QRScanner from "./pages/QRScanner";
+import ComplaintsPage from "./pages/Complaints/ComplaintsPage";
+import ComplaintDetailsPage from "./pages/Complaints/ComplaintDetails";
+import TenantNotificationsPage from "./pages/NotificationsPage";
 
 function App() {
+  const { loading, isAuthenticated } = useAuth();
+
+  // =============================
+  // HANDLE INITIAL LOAD
+  // =============================
+  if (loading) {
+    return (
+      <div className="h-screen flex items-center justify-center">
+        <span className="text-sm text-muted-foreground">
+          Loading...
+        </span>
+      </div>
+    );
+  }
+
   return (
     <>
       <Routes>
-        {/* Public Routes */}
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+        {/* =============================
+                    PUBLIC ROUTES
+                ============================= */}
+        <Route element={<PublicRoute />}>
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route
+            path="/forgot-password"
+            element={<ForgotPasswordPage />}
+          />
+        </Route>
 
-        {/* Protected Routes */}
+        {/* =============================
+                    PROTECTED ROUTES
+                ============================= */}
         <Route element={<ProtectedRoute />}>
           <Route element={<ProtectedLayout />}>
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/scan" element={<QRScanner />} />
 
+            {/* PG */}
             <Route path="/pg/:pgCode" element={<PGPage />} />
-            {/* Complaints Module */}
-            <Route path="/complaints" element={<ComplaintsPage />} />
-            <Route path="/complaints/:complaintId" element={<ComplaintDetailsPage />} />
 
-            {/* Notifications Module  */}
-            <Route path="/notifications" element={<TenantNotificationsPage />} />
-            {/* <Route path="/announcements" element={<Announcements />} /> */}
+            {/* Complaints */}
+            <Route path="/complaints" element={<ComplaintsPage />} />
+            <Route
+              path="/complaints/:complaintId"
+              element={<ComplaintDetailsPage />}
+            />
+
+            {/* Notifications */}
+            <Route
+              path="/notifications"
+              element={<TenantNotificationsPage />}
+            />
           </Route>
         </Route>
 
-        {/* Root redirect */}
-        <Route path="/" element={<Navigate to="/dashboard" replace />} />
+        {/* =============================
+                    ROOT REDIRECT
+                ============================= */}
+        <Route
+          path="/"
+          element={
+            <Navigate
+              to={isAuthenticated ? "/dashboard" : "/login"}
+              replace
+            />
+          }
+        />
 
-        {/* Fallback */}
-        <Route path="*" element={<Navigate to="/dashboard" replace />} />
+        {/* =============================
+                    FALLBACK
+                ============================= */}
+        <Route
+          path="*"
+          element={
+            <Navigate
+              to={isAuthenticated ? "/dashboard" : "/login"}
+              replace
+            />
+          }
+        />
       </Routes>
 
-      <Toaster position="top-center" reverseOrder={false} />
+      <Toaster position="top-center" />
     </>
   );
 }
