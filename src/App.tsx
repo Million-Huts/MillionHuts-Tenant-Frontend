@@ -14,12 +14,13 @@ import ForgotPasswordPage from "./pages/Auth/ForgotPassword";
 
 // App Pages
 import Dashboard from "./pages/Dashboard";
-import Profile from "./pages/Profile/TenantProfilePage";
+import Profile from "./pages/Profile/TenantProfile";
 import PGPage from "./pages/PGPage";
 import QRScanner from "./pages/QRScanner";
-import ComplaintsPage from "./pages/Complaints/ComplaintsPage";
+import Complaints from "./pages/Complaints/Complaints";
 import ComplaintDetailsPage from "./pages/Complaints/ComplaintDetails";
 import TenantNotificationsPage from "./pages/NotificationsPage";
+import MyPG from "./pages/MyPG";
 
 function App() {
   const { loading, isAuthenticated } = useAuth();
@@ -64,8 +65,10 @@ function App() {
             {/* PG */}
             <Route path="/pg/:pgCode" element={<PGPage />} />
 
+            <Route path="/my-pg" element={<MyPG />} />
+
             {/* Complaints */}
-            <Route path="/complaints" element={<ComplaintsPage />} />
+            <Route path="/complaints" element={<Complaints />} />
             <Route
               path="/complaints/:complaintId"
               element={<ComplaintDetailsPage />}

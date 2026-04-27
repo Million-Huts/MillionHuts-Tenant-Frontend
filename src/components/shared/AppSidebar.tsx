@@ -2,17 +2,17 @@ import {
     LayoutDashboard,
     User,
     LogOut,
-    ChevronLeft,
     Home,
     CreditCard,
     Command,
     X,
     QrCode,
     MessageSquareWarning,
-    Bell
+    Bell,
+    Settings,
+    Sparkles
 } from "lucide-react";
-
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -29,15 +29,7 @@ export default function AppSidebar({ mobileOpen, setMobileOpen }: Props) {
     const location = useLocation();
     const { stayRecords, logout } = useAuth();
 
-    const [collapsed, setCollapsed] = useState(false);
-
     const hasStay = !!stayRecords;
-
-    /*
-    ========================================
-    NAV CONFIG (DYNAMIC)
-    ========================================
-    */
 
     const navItems = hasStay
         ? [
@@ -54,25 +46,15 @@ export default function AppSidebar({ mobileOpen, setMobileOpen }: Props) {
 
     const bottomNav = [
         { label: "Profile", icon: User, to: "/profile" },
+        { label: "Settings", icon: Settings, to: "/settings" },
     ];
 
-    /*
-    ========================================
-    CLOSE MOBILE ON RESIZE
-    ========================================
-    */
-
+    // Close mobile sidebar on resize if it's open
     useEffect(() => {
         const update = () => setMobileOpen(false);
         window.addEventListener("resize", update);
         return () => window.removeEventListener("resize", update);
     }, [setMobileOpen]);
-
-    /*
-    ========================================
-    NAV LINK
-    ========================================
-    */
 
     const NavLink = ({ item }: { item: any }) => {
         const active = location.pathname === item.to;
@@ -82,176 +64,117 @@ export default function AppSidebar({ mobileOpen, setMobileOpen }: Props) {
                 to={item.to}
                 onClick={() => setMobileOpen(false)}
                 className={cn(
-                    "relative flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-all group",
+                    "relative flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium transition-all group",
                     active
-                        ? "bg-primary text-primary-foreground shadow-md shadow-primary/20"
-                        : "text-muted-foreground hover:bg-accent hover:text-accent-foreground",
-                    collapsed && "justify-center px-2"
+                        ? "text-primary-foreground shadow-lg shadow-primary/20"
+                        : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
                 )}
             >
-                <item.icon
-                    className={cn(
-                        "h-5 w-5 shrink-0",
-                        active && "text-white"
-                    )}
-                />
-
-                <AnimatePresence>
-                    {!collapsed && (
-                        <motion.span
-                            initial={{ opacity: 0, x: -8 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            exit={{ opacity: 0, x: -8 }}
-                            className="truncate"
-                        >
-                            {item.label}
-                        </motion.span>
-                    )}
-                </AnimatePresence>
-
-                {/* Tooltip for collapsed */}
-                {collapsed && (
-                    <div className="absolute left-14 hidden group-hover:block z-50 rounded-md bg-foreground px-2 py-1 text-xs text-background whitespace-nowrap">
-                        {item.label}
-                    </div>
+                {active && (
+                    <motion.div
+                        layoutId="activeNav"
+                        className="absolute inset-0 bg-primary rounded-xl"
+                        transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                    />
                 )}
+                <item.icon className={cn("h-5 w-5 shrink-0 z-10", active && "text-primary-foreground")} />
+                <span className="truncate z-10">{item.label}</span>
             </Link>
         );
     };
 
-    /*
-    ========================================
-    SIDEBAR
-    ========================================
-    */
-
-    const sidebarVariants = {
-        expanded: { width: "260px" },
-        collapsed: { width: "80px" },
-    };
-
-    const sidebarContent = (
-        <motion.div
-            initial={false}
-            animate={collapsed ? "collapsed" : "expanded"}
-            variants={sidebarVariants}
-            className="relative flex h-full flex-col bg-sidebar border-r border-sidebar-border"
-        >
-            {/* Logo */}
-            <div className="flex h-16 items-center px-4">
-                <div className={cn("flex items-center gap-3", collapsed && "justify-center w-full")}>
-                    <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-primary text-primary-foreground">
-                        <Command className="h-5 w-5" />
+    const SidebarInner = () => (
+        <div className="flex h-full flex-col bg-card/40 backdrop-blur-xl border-r border-border/40">
+            {/* Brand Header */}
+            <div className="flex h-20 items-center px-6">
+                <div className="flex items-center gap-3">
+                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-primary to-accent text-white shadow-lg">
+                        <Command className="h-6 w-6" />
                     </div>
-                    {!collapsed && (
-                        <span className="text-lg font-bold text-sidebar-foreground">
+                    <div>
+                        <span className="text-lg font-black tracking-tight text-foreground block leading-none">
                             MillionHuts
                         </span>
-                    )}
+                        {hasStay && (
+                            <span className="text-[10px] font-bold text-accent uppercase tracking-widest flex items-center gap-1 mt-1">
+                                <Sparkles className="h-2 w-2" /> Active Stay
+                            </span>
+                        )}
+                    </div>
                 </div>
             </div>
 
             {/* Navigation */}
-            <nav className="flex-1 space-y-1 px-3 overflow-y-auto">
-                {!collapsed && (
-                    <p className="px-3 text-[10px] font-bold uppercase text-muted-foreground mt-4">
-                        Navigation
-                    </p>
-                )}
-
+            <nav className="flex-1 space-y-1 px-4 py-4 overflow-y-auto">
+                <p className="px-4 text-[10px] font-black uppercase text-muted-foreground/60 tracking-[0.2em] mb-4">
+                    Main Menu
+                </p>
                 {navItems.map((item) => (
                     <NavLink key={item.to} item={item} />
                 ))}
             </nav>
 
-            {/* Bottom */}
-            <div className="border-t p-3 space-y-1">
+            {/* Account & Bottom Section */}
+            <div className="mt-auto border-t border-border/40 p-4 space-y-1 bg-muted/10">
+                <p className="px-4 text-[10px] font-black uppercase text-muted-foreground/60 tracking-[0.2em] mb-2">
+                    Account
+                </p>
                 {bottomNav.map((item) => (
                     <NavLink key={item.to} item={item} />
                 ))}
-
                 <Button
                     variant="ghost"
                     onClick={logout}
-                    className={cn(
-                        "w-full justify-start gap-3 text-muted-foreground hover:text-destructive hover:bg-destructive/10",
-                        collapsed && "justify-center px-0"
-                    )}
+                    className="w-full h-11 justify-start gap-3 rounded-xl text-muted-foreground hover:text-destructive hover:bg-destructive/10 transition-colors px-4"
                 >
                     <LogOut className="h-5 w-5" />
-                    {!collapsed && <span>Sign Out</span>}
+                    <span className="font-medium text-sm">Sign Out</span>
                 </Button>
-
-                {/* Collapse Toggle */}
-                <button
-                    onClick={() => setCollapsed(!collapsed)}
-                    className="absolute -right-3 top-20 hidden md:flex h-6 w-6 items-center justify-center rounded-full border bg-background"
-                >
-                    <ChevronLeft
-                        className={cn(
-                            "h-4 w-4 transition-transform",
-                            collapsed && "rotate-180"
-                        )}
-                    />
-                </button>
             </div>
-        </motion.div>
+        </div>
     );
-
-    /*
-    ========================================
-    RENDER
-    ========================================
-    */
 
     return (
         <>
-            {/* Desktop */}
-            <aside className="hidden md:flex h-screen sticky top-0">
-                {sidebarContent}
+            {/* Desktop View: Static Sidebar */}
+            <aside className="hidden lg:block w-[280px] h-screen sticky top-0 z-40">
+                <SidebarInner />
             </aside>
 
-            {/* Mobile */}
-            <div
-                className={cn(
-                    "fixed inset-y-0 left-0 z-50 w-72 bg-background border-r transform transition-transform md:hidden",
-                    mobileOpen ? "translate-x-0" : "-translate-x-full"
-                )}
-            >
-                <div className="flex h-16 items-center justify-between px-6 border-b">
-                    <span className="font-bold text-lg">MillionHuts</span>
-                    <Button
-                        variant="ghost"
-                        size="icon"
-                        onClick={() => setMobileOpen(false)}
-                    >
-                        <X className="h-5 w-5" />
-                    </Button>
-                </div>
-
-                <div className="flex flex-col h-[calc(100%-64px)] p-4 space-y-4">
-                    <div className="flex-1 space-y-2">
-                        {navItems.map((item) => (
-                            <NavLink key={item.to} item={item} />
-                        ))}
-                    </div>
-
-                    <div className="border-t pt-4 space-y-2">
-                        {bottomNav.map((item) => (
-                            <NavLink key={item.to} item={item} />
-                        ))}
-
-                        <Button
-                            variant="destructive"
-                            className="w-full justify-start gap-3"
-                            onClick={logout}
+            {/* Mobile View: Slide-in Drawer */}
+            <AnimatePresence>
+                {mobileOpen && (
+                    <>
+                        {/* Dark Overlay */}
+                        <motion.div
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                            onClick={() => setMobileOpen(false)}
+                            className="fixed inset-0 z-[60] bg-black/60 backdrop-blur-sm lg:hidden"
+                        />
+                        {/* Drawer */}
+                        <motion.div
+                            initial={{ x: "-100%" }}
+                            animate={{ x: 0 }}
+                            exit={{ x: "-100%" }}
+                            transition={{ type: "spring", damping: 25, stiffness: 200 }}
+                            className="fixed inset-y-0 left-0 z-[70] w-[280px] lg:hidden"
                         >
-                            <LogOut className="h-5 w-5" />
-                            Logout
-                        </Button>
-                    </div>
-                </div>
-            </div>
+                            <SidebarInner />
+                            {/* Close Button Inside Drawer */}
+                            <Button
+                                variant="ghost"
+                                size="icon"
+                                onClick={() => setMobileOpen(false)}
+                                className="absolute right-4 top-5 rounded-full lg:hidden"
+                            >
+                                <X className="h-5 w-5" />
+                            </Button>
+                        </motion.div>
+                    </>
+                )}
+            </AnimatePresence>
         </>
     );
 }

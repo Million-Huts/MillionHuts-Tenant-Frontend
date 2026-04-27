@@ -6,6 +6,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext.tsx';
 import { initApiBase } from './lib/api.ts';
 import { ThemeProvider } from './context/ThemeContext.tsx';
+import { TooltipProvider } from './components/ui/tooltip.tsx';
 
 initApiBase().finally(() => {
 
@@ -14,7 +15,9 @@ initApiBase().finally(() => {
       <BrowserRouter>
         <AuthProvider>
           <ThemeProvider>
-            <App />
+            <TooltipProvider delayDuration={300}>
+              <App />
+            </TooltipProvider>
           </ThemeProvider>
         </AuthProvider>
       </BrowserRouter>
