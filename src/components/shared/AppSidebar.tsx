@@ -10,7 +10,8 @@ import {
     MessageSquareWarning,
     Bell,
     Settings,
-    Sparkles
+    Sparkles,
+    Users2,
 } from "lucide-react";
 import { useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
@@ -35,6 +36,7 @@ export default function AppSidebar({ mobileOpen, setMobileOpen }: Props) {
         ? [
             { label: "Dashboard", icon: LayoutDashboard, to: "/dashboard" },
             { label: "My PG", icon: Home, to: "/my-pg" },
+            { label: "PG Mates", icon: Users2, to: "/pg-mates" },
             { label: "Payments", icon: CreditCard, to: "/payments" },
             { label: "Complaints", icon: MessageSquareWarning, to: "/complaints" },
             { label: "Notifications", icon: Bell, to: "/notifications" },
