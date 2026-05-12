@@ -4,7 +4,6 @@ import {
     LogOut,
     Home,
     CreditCard,
-    Command,
     X,
     QrCode,
     MessageSquareWarning,
