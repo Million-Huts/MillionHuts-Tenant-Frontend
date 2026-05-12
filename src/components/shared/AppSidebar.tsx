@@ -88,8 +88,9 @@ export default function AppSidebar({ mobileOpen, setMobileOpen }: Props) {
             {/* Brand Header */}
             <div className="flex h-20 items-center px-6">
                 <div className="flex items-center gap-3">
-                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-primary to-accent text-white shadow-lg">
-                        <Command className="h-6 w-6" />
+                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl shadow-lg">
+                        {/* <Command className="h-6 w-6" /> */}
+                        <img src="/logo-2.png" alt="logo" />
                     </div>
                     <div>
                         <span className="text-lg font-black tracking-tight text-foreground block leading-none">

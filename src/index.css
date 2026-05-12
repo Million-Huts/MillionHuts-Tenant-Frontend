@@ -37,69 +37,79 @@
 
 :root {
   --radius: 0.85rem;
-  /* Increased for a friendlier SaaS feel */
 
-  /* Light Mode - Soft Creamy White with Deep Purple Primary */
-  --background: oklch(0.99 0.005 280);
-  --foreground: oklch(0.2 0.02 280);
+  /* Background - warm clean white */
+  --background: oklch(0.985 0.005 80);
+  --foreground: oklch(0.2 0.02 260);
 
   --card: oklch(1 0 0);
-  --card-foreground: oklch(0.2 0.02 280);
+  --card-foreground: oklch(0.2 0.02 260);
 
   --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.2 0.02 280);
+  --popover-foreground: oklch(0.2 0.02 260);
 
-  /* Primary: Royal Purple */
-  --primary: oklch(0.45 0.18 300);
-  --primary-foreground: oklch(0.99 0 0);
+  /* 🔥 Primary: Brand Orange */
+  --primary: oklch(0.75 0.16 55);
+  /* ~ #F98A2E */
+  --primary-foreground: oklch(1 0 0);
 
-  /* Secondary: Soft Lavender */
-  --secondary: oklch(0.94 0.03 300);
-  --secondary-foreground: oklch(0.35 0.15 300);
+  /* 🟠 Secondary: Soft Orange Background */
+  --secondary: oklch(0.93 0.04 60);
+  --secondary-foreground: oklch(0.45 0.12 50);
 
-  --muted: oklch(0.96 0.01 280);
-  --muted-foreground: oklch(0.45 0.05 280);
+  --muted: oklch(0.96 0.01 80);
+  --muted-foreground: oklch(0.5 0.03 260);
 
-  /* Accent: Deep Maroon/Wine */
-  --accent: oklch(0.48 0.14 15);
-  --accent-foreground: oklch(0.99 0 0);
+  /* 🔴 Accent: Reddish Orange */
+  --accent: oklch(0.68 0.18 25);
+  /* ~ #F6564B */
+  --accent-foreground: oklch(1 0 0);
 
-  --destructive: oklch(0.6 0.18 25);
-  --border: oklch(0.92 0.01 280);
-  --input: oklch(0.92 0.01 280);
-  --ring: oklch(0.45 0.18 300);
+  /* ❗ Destructive (kept aligned with accent) */
+  --destructive: oklch(0.62 0.2 25);
+
+  /* Borders / inputs */
+  --border: oklch(0.92 0.01 80);
+  --input: oklch(0.92 0.01 80);
+
+  /* 🔵 Ring (focus): Teal contrast from logo */
+  --ring: oklch(0.6 0.12 210);
+  /* ~ #077993 */
 }
 
 .dark {
-  /* Nordic Dark - Deep Midnight Navy/Slate (Nord 0 style) */
-  --background: oklch(0.22 0.02 260);
+  /* 🌙 Dark Mode - Deep Navy from logo */
+  --background: oklch(0.22 0.02 250);
+  /* ~ #0A1A32 vibe */
   --foreground: oklch(0.94 0.02 260);
 
-  /* Slightly lighter slate for cards */
-  --card: oklch(0.26 0.02 260);
+  --card: oklch(0.26 0.02 250);
   --card-foreground: oklch(0.94 0.02 260);
 
-  --popover: oklch(0.24 0.02 260);
+  --popover: oklch(0.24 0.02 250);
   --popover-foreground: oklch(0.94 0.02 260);
 
-  /* Primary: Vibrant Purple for Contrast */
-  --primary: oklch(0.65 0.2 300);
-  --primary-foreground: oklch(1 0 0);
+  /* 🔥 Primary: brighter orange for contrast */
+  --primary: oklch(0.8 0.17 55);
+  --primary-foreground: oklch(0.1 0 0);
 
-  /* Secondary: Deepened Lavender */
-  --secondary: oklch(0.32 0.05 300);
-  --secondary-foreground: oklch(0.9 0.05 300);
+  --secondary: oklch(0.32 0.04 60);
+  --secondary-foreground: oklch(0.9 0.05 60);
 
-  --muted: oklch(0.3 0.03 260);
+  --muted: oklch(0.3 0.02 250);
   --muted-foreground: oklch(0.7 0.03 260);
 
-  /* Accent: Muted Maroon/Burgundy */
-  --accent: oklch(0.55 0.15 20);
-  --accent-foreground: oklch(1 0 0);
+  /* 🔴 Accent stays punchy */
+  --accent: oklch(0.7 0.18 25);
+  --accent-foreground: oklch(0.1 0 0);
+
+  --destructive: oklch(0.65 0.22 25);
 
   --border: oklch(1 0 0 / 12%);
   --input: oklch(1 0 0 / 10%);
-  --ring: oklch(0.65 0.2 300);
+
+  /* 🔵 Teal focus still visible */
+  --ring: oklch(0.7 0.12 210);
 }
 
 @layer base {
@@ -112,7 +122,6 @@
     font-feature-settings: "cv02", "cv03", "cv04", "cv11";
   }
 
-  /* Custom Scrollbar */
   ::-webkit-scrollbar {
     width: 6px;
   }
@@ -139,8 +148,8 @@
     box-shadow: 0 10px 40px -12px rgba(0, 0, 0, 0.4);
   }
 
-  /* Refined Text Gradient using your primary/accent colors */
+  /* 🔥 Brand Gradient */
   .text-gradient {
-    @apply bg-clip-text text-transparent bg-gradient-to-r from-primary to-accent;
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-primary via-accent to-primary;
   }
 }
