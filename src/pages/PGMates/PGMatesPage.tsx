@@ -19,7 +19,6 @@ import type { PGMate } from "@/types/pgmates";
 // Expected response: { data: PGMate[], total: number }
 // The pgId is available from stayRecords.pgId
 // ============================================================
-const PGMATES_ENDPOINT = (pgId: string) => `/pgs/${pgId}/mates`;
 
 export default function PGMatesPage() {
     const { stayRecords } = useAuth();
@@ -47,7 +46,7 @@ export default function PGMatesPage() {
         try {
             setLoading(true);
             setError(null);
-            const res = await apiPrivate.get(PGMATES_ENDPOINT(pgId));
+            const res = await apiPrivate.get(`tenant/me/pg-mates`);
             setMates(res.data?.data || []);
         } catch (err: any) {
             const msg = err?.response?.data?.message || "Failed to load housemates";
