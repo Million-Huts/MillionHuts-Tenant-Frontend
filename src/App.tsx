@@ -21,6 +21,7 @@ import Complaints from "./pages/Complaints/Complaints";
 import ComplaintDetailsPage from "./pages/Complaints/ComplaintDetails";
 import TenantNotificationsPage from "./pages/NotificationsPage";
 import MyPG from "./pages/MyPG";
+import PGMatesPage from "./pages/PGMates/PGMatesPage";
 
 function App() {
   const { loading, isAuthenticated } = useAuth();
@@ -66,6 +67,9 @@ function App() {
             <Route path="/pg/:pgCode" element={<PGPage />} />
 
             <Route path="/my-pg" element={<MyPG />} />
+
+            {/* PG Mates */}
+            <Route path="/pg-mates" element={<PGMatesPage />} />
 
             {/* Complaints */}
             <Route path="/complaints" element={<Complaints />} />
